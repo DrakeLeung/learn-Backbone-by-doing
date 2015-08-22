@@ -15,15 +15,40 @@ module.exports = {
 
 	module: {
 		loaders: [{
+			test: /\.js$/,
 			exclude: /node_modules\//,
 			loader: 'babel-loader'
+		}, {
+			test: /\.css$/,
+			loader: 'style!css'
+		}, {
+			test: /\.html/,
+			loader: 'html'
 		}]
+	},
+
+	resolve: {
+		//root: [],
+
+		extensions: [
+			'', '.js', '.html', '.css'
+		],
+		//moduleDirectories: [
+		//	__dirname + '/app',
+		//	'node_modules'
+		//],
+
+		alias: {
+			'underscore': 'backbone/node_modules/underscore'
+		}
 	},
 
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin()
 	],
+
+	devtool : 'source-map',
 
 	devServer: {
 		noInfo: false,

@@ -1,3 +1,9 @@
-import AppView from './view/AppView.js';
+import AppView from './view/AppView';
+import $ from 'jquery';
 
-AppView.render();
+var appView = new AppView({
+	el: '.appView'
+}).render();
+
+
+
