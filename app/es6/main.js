@@ -1,9 +1,3 @@
-import AppView from './view/AppView';
-import $ from 'jquery';
+import Router from './router/Router.js'
 
-var appView = new AppView({
-	el: '.appView'
-}).render();
-
-
-
+new Router();

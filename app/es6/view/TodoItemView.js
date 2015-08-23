@@ -7,11 +7,7 @@ let TodoItemView = Backbone.View.extend({
 	tagName: 'li',
 	template: _.template(todoItemTpl),
 
-	render: function (title) {
-		this.model = new TodoItem({
-			title: title
-		});
-
+	render: function () {
 		this.$el.append(this.template({
 			todo: this.model
 		}));

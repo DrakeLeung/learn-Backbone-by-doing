@@ -1,18 +1,25 @@
-//require("../../style/app.css");
+require("../../style/app.css");
 
 import $ from 'jquery';
 import Backbone from 'backbone';
 
-import TodoItemView from './TodoItemView';
+import TodoListView from './TodoListView';
 
 var AppView = Backbone.View.extend({
 	events: {
 		'click input[type=submit]': 'addTodo'
 	},
 
+
 	render: function () {
 		this.$input = $('.appView input.todoTitle');
+		this.listTodo();
 		return this;
+	},
+
+	listTodo: function () {
+		let todoListView = new TodoListView().render().el;
+		this.$('.todos').append(todoListView);
 	},
 
 	addTodo: function (event) {
@@ -24,8 +31,6 @@ var AppView = Backbone.View.extend({
 			return 0;
 		}
 
-		let todoItemView = new TodoItemView().render(title).el;
-		this.$el.append(todoItemView);
 		this.$input.val('');
 	}
 });
