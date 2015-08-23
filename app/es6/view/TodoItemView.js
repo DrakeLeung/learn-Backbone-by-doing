@@ -5,6 +5,8 @@ import todoItemTpl from '../../template/todoItemTpl'
 
 let TodoItemView = Backbone.View.extend({
 	tagName: 'li',
+	className: 'todo-item',
+
 	template: _.template(todoItemTpl),
 
 	render: function () {

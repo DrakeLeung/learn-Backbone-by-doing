@@ -1,9 +1,12 @@
 <input
   type="checkbox"
+  class="todo-status"
   id="<%= todo.get('title') %>"
   <%= todo.get('done') ? checked : '' %>
 >
 
-<label for="<%= todo.get('title') %>">
+<label class="todo-title" for="<%= todo.get('title') %>">
   <%= todo.get('title') %>
 </label>
+
+<a href="#" class="rm-todo" data-title="<%= todo.get('title') %>"> x </a>

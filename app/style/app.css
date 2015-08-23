@@ -17,7 +17,7 @@ body {
 .appView {
   background: #a3be8c;
   padding: 2rem;
-  width: 60%;
+  width: 350px;
 }
 
 .appView .todoTitle {
@@ -40,9 +40,32 @@ body {
   border: 3px solid #ccc;
 }
 
-.todoList {
+.todo-list {
   margin: 0;
   padding: 1rem;
   list-style: none;
   background: #aabbdd;
+}
+
+.todo-item {
+  border-bottom: 1px dashed #ccc;
+  padding: 5px 0;
+}
+
+.todo-item label {
+  display: inline-block;
+  width: 80%;
+  cursor: pointer;
+}
+
+.todo-item .rm-todo {
+  width: 10%;
+  display: inline-block;
+  text-decoration: none;
+  border-left: 1px solid #ccc;
+  text-align: center;
+  color: #000;
+}
+.todo-item .rm-todo:hover {
+  color: #fff;
 }

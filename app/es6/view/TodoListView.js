@@ -7,12 +7,12 @@ import TodoCollection from '../collection/TodoCollection'
 
 let TodoListView = Backbone.View.extend({
 	tagName: 'ul',
-	className: 'todoList',
+	className: 'todo-list',
 
 	render: function () {
-		var me = this;
+		let me = this;
 
-		_.each(me.collection.models, function (todoModel) {
+		_.each(me.collection.models, function (todoModel, index) {
 
 			let todoItemView = new TodoItemView({
 				model: todoModel
