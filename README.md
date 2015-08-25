@@ -44,3 +44,7 @@ new出来的instance根本就不会有`todoCollection`这个property = =
 
 因为我想把所有的事件都放在`AppView`里面，然后我就这样: `click a.rm-todo: rmTodo`这个是work不了的。后来想到了用事件冒泡:
 `click: rmTodo`，然后后就在`rmTodo`里面判断`event.target`是不是`a.rm-todo`。
+
+> 当我点击label的时候，居然会出发2次click事件。
+debug了一下，发现原来点击`label`也会触发对应的`input`的click事件，只要前者的`for`attribute和后者的`id`一致。
+

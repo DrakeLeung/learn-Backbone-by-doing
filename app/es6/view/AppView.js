@@ -5,6 +5,7 @@ import Backbone from 'backbone'
 
 import TodoListView from './TodoListView'
 import TodoCollection from '../collection/TodoCollection.js'
+import TodoItem from '../model/TodoItem.js'
 
 var AppView = Backbone.View.extend({
 	events: {
@@ -16,6 +17,7 @@ var AppView = Backbone.View.extend({
 	initialize: function () {
 		this.$input = $('.appView input.todoTitle');
 		this.todoCollection = new TodoCollection();
+		this.todoCollection.fetch();
 
 		this.listenTo(this.todoCollection, 'add', this.render);
 		this.listenTo(this.todoCollection, 'update', this.render);
@@ -52,14 +54,15 @@ var AppView = Backbone.View.extend({
 			target = event.target,
 			tagName = target.tagName.toLowerCase();
 
-		if (tagName == 'input')
+		// 如果是label的话，就omit掉，
+		// 因为他会还自动触发对应的input的click事件
+		if (tagName == 'label')
+			return 0;
+		else if (tagName == 'input')
 			todoTitle = target.getAttribute('id');
-		else if (tagName == 'label')
-			todoTitle = target.getAttribute('for');
 
 		let todoModel = this.todoCollection.where({ title: todoTitle })[0];
-		let todoStatus = $('input.todo-status').is(':checked')? false : true;
-		todoModel.set('done', todoStatus);
+		todoModel.toggle();
 
 	},
 
@@ -67,9 +70,8 @@ var AppView = Backbone.View.extend({
 		event.preventDefault();
 		let todoTitle = event.target.dataset.title;
 
-		this.todoCollection.remove(
-			this.todoCollection.where({ title: todoTitle })
-		);
+		var todo = this.todoCollection.where({ title: todoTitle })[0];
+		todo.destroy();
 	},
 
 	addTodo: function (event) {
@@ -81,9 +83,12 @@ var AppView = Backbone.View.extend({
 			return 0;
 		}
 
-		this.todoCollection.add({
+		var newTodo = new TodoItem({
 			title: title
 		});
+		newTodo.save();
+		this.todoCollection.add(newTodo);
+
 		this.$input.val('');
 	}
 });

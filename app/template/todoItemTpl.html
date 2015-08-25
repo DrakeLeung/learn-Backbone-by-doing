@@ -2,7 +2,7 @@
   type="checkbox"
   class="todo-status"
   id="<%= todo.get('title') %>"
-  <%= todo.get('done') ? checked : '' %>
+  <%= todo.get('done') ? "checked": "" %>
 >
 
 <label class="todo-title" for="<%= todo.get('title') %>">
