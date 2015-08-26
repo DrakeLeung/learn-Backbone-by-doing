@@ -46,5 +46,22 @@ new出来的instance根本就不会有`todoCollection`这个property = =
 `click: rmTodo`，然后后就在`rmTodo`里面判断`event.target`是不是`a.rm-todo`。
 
 > 当我点击label的时候，居然会出发2次click事件。
+
 debug了一下，发现原来点击`label`也会触发对应的`input`的click事件，只要前者的`for`attribute和后者的`id`一致。
 
+> 如何监听'Enter'键的按下事件
+
+`keypress`事件, 检查`event.which`是不是`13`(也就是Enter)
+
+
+## changelog
+### UI
+1. 标题不够突出 :heavy_check_mark:
+2. 当没有todo的时候，应该只显示输入todo的input
+3. 不需要submit按钮，这样感觉和todoList有点分离:heavy_check_mark:
+4. '删除'按钮应该在hover itodo的时候才出现 :heavy_check_mark:
+5. checkbox不够漂亮，check的时候应该给todo加个删除线
+6. 没显示todo数量
+
+### Logic 
+1. 检查input的值的时候，没有考虑到**空白字符**

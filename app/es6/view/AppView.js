@@ -9,13 +9,13 @@ import TodoItem from '../model/TodoItem.js'
 
 var AppView = Backbone.View.extend({
 	events: {
-		'click input[type=submit]': 'addTodo',
+		'keypress input': 'addTodo',
 		'click': 'handleClick'
 	},
 
 
 	initialize: function () {
-		this.$input = $('.appView input.todoTitle');
+		this.$input = $('.appView .todo-input');
 		this.todoCollection = new TodoCollection();
 		this.todoCollection.fetch();
 
@@ -34,7 +34,7 @@ var AppView = Backbone.View.extend({
 		});
 
 		this.$('.todo-list').remove();
-		this.$('.todos').append(todoListView.render().el);
+		this.$el.append(todoListView.render().el);
 	},
 
 	// handle the bubble click event
@@ -75,7 +75,8 @@ var AppView = Backbone.View.extend({
 	},
 
 	addTodo: function (event) {
-		event.preventDefault();
+		// If not 'Enter' key
+		if (event.which != 13) return 0;
 
 		let title = this.$input.val();
 		if (!title) {

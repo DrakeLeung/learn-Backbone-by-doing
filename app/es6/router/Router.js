@@ -7,7 +7,7 @@ let Router = Backbone.Router.extend({
 
 	initialize: function () {
 		this.view = new AppView({
-			el: '.appView'
+			el: '.app-view'
 		});
 
 		this.view.render();
