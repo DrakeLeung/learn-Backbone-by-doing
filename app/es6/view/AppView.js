@@ -3,7 +3,8 @@ require("../../style/app.css")
 import $ from 'jquery'
 import Backbone from 'backbone'
 
-import TodoListView from './TodoListView'
+import TodoListView from './TodoListView.js'
+import StatView from './StatView.js'
 import TodoCollection from '../collection/TodoCollection.js'
 import TodoItem from '../model/TodoItem.js'
 
@@ -13,28 +14,47 @@ var AppView = Backbone.View.extend({
 		'click': 'handleClick'
 	},
 
-
 	initialize: function () {
-		this.$input = $('.appView .todo-input');
-		this.todoCollection = new TodoCollection();
-		this.todoCollection.fetch();
+		let me = this;
 
-		this.listenTo(this.todoCollection, 'add', this.render);
-		this.listenTo(this.todoCollection, 'update', this.render);
+		this.$input = $('.app-view .todo-input');
+		this.todoCollection = new TodoCollection();
+
+		this.todoCollection.fetch({
+			success: function () {
+				me.render();
+				me.listenTo(me.todoCollection, 'update', me.render);
+			}
+		});
+
 	},
 
 	render: function () {
-		this.listTodo();
+		this.createTodoListView();
+		this.createStatView();
+
 		return this;
 	},
 
-	listTodo: function () {
-		let todoListView = new TodoListView({
-			collection: this.todoCollection
-		});
+	createStatView: function () {
+		if (!this.statView) {
+			this.statView = new StatView({
+				collection: this.todoCollection
+			});
+		}
 
-		this.$('.todo-list').remove();
-		this.$el.append(todoListView.render().el);
+		this.$el.append(this.statView.render().el);
+
+	},
+
+	createTodoListView: function () {
+		if (!this.todoListView) {
+			this.todoListView = new TodoListView({
+				collection: this.todoCollection
+			});
+		}
+
+		this.$el.append(this.todoListView.render().el);
 	},
 
 	// handle the bubble click event
@@ -54,23 +74,36 @@ var AppView = Backbone.View.extend({
 			target = event.target,
 			tagName = target.tagName.toLowerCase();
 
-		// 如果是label的话，就omit掉，
-		// 因为他会还自动触发对应的input的click事件
-		if (tagName == 'label')
+		// if label ommit it,
+		// cuz it will automically fire the checkbox's click event
+		if (tagName == 'label') {
 			return 0;
-		else if (tagName == 'input')
+		} else if (tagName == 'input') {
 			todoTitle = target.getAttribute('id');
 
-		let todoModel = this.todoCollection.where({ title: todoTitle })[0];
+			// set class to 'label' element for style
+			$(target).next().toggleClass('done');
+		}
+
+		let todoModel = this.todoCollection.where({
+			title: todoTitle
+		})[0];
+
 		todoModel.toggle();
+		todoModel.save();
 
 	},
 
 	rmTodo: function (event) {
 		event.preventDefault();
+
+		// 'title' is data-* attribute, so access by 'element.dataset
 		let todoTitle = event.target.dataset.title;
 
-		var todo = this.todoCollection.where({ title: todoTitle })[0];
+		let todo = this.todoCollection.where({
+			title: todoTitle
+		})[0];
+
 		todo.destroy();
 	},
 
@@ -79,19 +112,23 @@ var AppView = Backbone.View.extend({
 		if (event.which != 13) return 0;
 
 		let title = this.$input.val();
-		if (!title) {
+		if (!title || !title.trim()) {
 			alert('You must input something first');
 			return 0;
 		}
 
 		var newTodo = new TodoItem({
-			title: title
+			'title': title
 		});
-		newTodo.save();
+
 		this.todoCollection.add(newTodo);
+		newTodo.save();
 
 		this.$input.val('');
-	}
+	},
+
 });
+
+
 
 export default AppView;

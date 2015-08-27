@@ -10,20 +10,28 @@ let TodoListView = Backbone.View.extend({
 	className: 'todo-list',
 
 	render: function () {
+		this.$el.empty();
+		this.listTodo();
+
+		return this;
+	},
+
+	listTodo: function () {
 		let me = this;
 
 		_.each(me.collection.models, function (todoModel, index) {
+			me.singleTodo(todoModel);
+		});
+	},
 
-			let todoItemView = new TodoItemView({
-				model: todoModel
-			});
-
-			me.$el.prepend(todoItemView.render().el);
-
+	singleTodo: function (todoModel) {
+		let todoItemView = new TodoItemView({
+			model: todoModel
 		});
 
-		return this;
+		this.$el.prepend(todoItemView.render().el);
 	}
+
 });
 
 export default TodoListView;

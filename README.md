@@ -1,6 +1,20 @@
 # learn-Backbone-by-doing
 learn Backbone by doing some demos
 
+## Snapshot
+![](http://ww3.sinaimg.cn/large/7f85b91egw1evh72rqwizj20eu0a7js5.jpg)
+
+## Check it out
+Open your terminal: 
+
+- clone the repo: `git clone https://github.com/DrakeLeung/learn-Backbone-by-doing.git`
+- install the dependencies: `npm install`
+- run the webpack-dev-server: `npm run dev`
+
+Open a new tab of terminal, or another terminal
+
+- run the json-server: `npm run server`
+
 ## License
 MIT
 
@@ -8,7 +22,11 @@ MIT
 
 > 当我们在AppView里面添加一个todo的时候，我们怎么告诉TodoItemView
 
+监听collection的事件,比如`update`, `add`.
+
 > import的时候总是相对于该文件
+
+这个似乎用到`import`的话就是这个样子= = 不过在webpack里面,想用什么都行. AMD, CMD, whatever...
 
 > 不同view之间如何共享同一个collection或者model
 
@@ -20,7 +38,8 @@ new TodoListView({
 });
 ```
 这样是work的，但是当`key`是其他的时候（除了`model`和`collection`之外)，是failed。
-```javascrip
+
+```javascript
 new TodoListView({
 	todoCollection: this.collection
 });
@@ -53,15 +72,34 @@ debug了一下，发现原来点击`label`也会触发对应的`input`的click�
 
 `keypress`事件, 检查`event.which`是不是`13`(也就是Enter)
 
+> 我正在实现计算todo的功能. 为此, 我多弄了一个statView. 但是问题来了, 在todoListView来还执行完毕之前, statView已经渲染完成了.
+这个并不是我所想的 = =
 
-## changelog
-### UI
-1. 标题不够突出 :heavy_check_mark:
-2. 当没有todo的时候，应该只显示输入todo的input
-3. 不需要submit按钮，这样感觉和todoList有点分离:heavy_check_mark:
-4. '删除'按钮应该在hover itodo的时候才出现 :heavy_check_mark:
-5. checkbox不够漂亮，check的时候应该给todo加个删除线
-6. 没显示todo数量
+果然,这个在`fetch()`的时候是**async**的, 在callback调用就好.  
+但是,我发现了fetch()的时候会出发collection的`add`事件
+
+> 当数据发生变化时, 我需要手动去监听这个事件(listenTo), 并且我需要把含有旧数据的view清空或者删掉, 这显然是很不好的.
+
+## Todos
+### Improvement
+- server support  :white_check_mark:
+- edit todo
+- search todo
 
 ### Logic 
-1. 检查input的值的时候，没有考虑到**空白字符**
+- 检查input的值的时候，考虑**空白字符** :white_check_mark:
+- 监听collection的`add`事件时, 不要渲染整个collection.
+
+### Router
+- all todos view  :white_check_mark:
+- all done todos view
+- all not done todos view
+
+### UI
+- 标题不够突出 :white_check_mark:
+- 不需要submit按钮，这样感觉和todoList有点分离 :white_check_mark:
+- '删除'按钮应该在hover itodo的时候才出现 :white_check_mark:
+- 原生的checkbox不够漂亮，并且很weird 
+- check的时候应该给todo加个删除线 :white_check_mark:
+- 显示todo数量 :white_check_mark:
+

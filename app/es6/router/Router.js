@@ -10,7 +10,6 @@ let Router = Backbone.Router.extend({
 			el: '.app-view'
 		});
 
-		this.view.render();
 	}
 });
 
