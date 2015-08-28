@@ -1,4 +1,4 @@
-import config from '../config.js'
+import { config } from '../config.js'
 
 import Backbone from 'backbone'
 
@@ -12,7 +12,7 @@ let TodoItem = Backbone.Model.extend({
 	},
 
 	toggle: function () {
-		this.set('done', !this.get('done'));
+		this.save('done', !this.get('done'));
 	}
 });
 

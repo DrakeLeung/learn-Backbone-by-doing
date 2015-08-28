@@ -15,7 +15,13 @@ let StatView = Backbone.View.extend({
 			count: this.collection.length
 		}));
 
+		this.$countElement = this.$('.todo-count');
+
 		return this;
+	},
+
+	updateCount: function () {
+		this.$countElement.html(this.collection.length);
 	}
 });
 

@@ -1,17 +1,12 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Sleep",
+      "title": "go to school",
+      "id": 2,
       "done": false
     },
     {
-      "id": 2,
-      "title": "Lunch",
-      "done": true
-    },
-    {
-      "title": "睡觉",
+      "title": "sleep",
       "id": 3,
       "done": true
     }

@@ -47,6 +47,16 @@ new TodoListView({
 
 new出来的instance根本就不会有`todoCollection`这个property = =
 
+在后来, 我在[这里](http://addyosmani.github.io/backbone-fundamentals/)找到了答案. 
+
+>  In Backbone 1.1.0, if you want to access passed options in  your view, you will need to save them as follows:
+
+```javascript
+initialize: function(options) {
+  this.options = options || {};
+}
+```
+
 > 当添加一个todo到collection的时候，要怎么更新页面。
 
 我们可以使用在`initialize`时，就使用`listenerTo()`这个方法来监听`collection`的`add`事件，然后当触发的时候就调用一个
@@ -79,6 +89,71 @@ debug了一下，发现原来点击`label`也会触发对应的`input`的click�
 但是,我发现了fetch()的时候会出发collection的`add`事件
 
 > 当数据发生变化时, 我需要手动去监听这个事件(listenTo), 并且我需要把含有旧数据的view清空或者删掉, 这显然是很不好的.
+
+> 在什么时候fetch一个collection才有数据, 因为他是async的.
+
+除了写个success callback, 我们还可以对collection的事件做个监听, 比如`add`或者`reset`.
+
+## After Compared
+改变todo的状态时, 我使用了这样的方法:
+
+```javascript
+toggle: function() {
+	this.set('done', !this.get('done'));
+}
+
+model.toggle();
+model.save();
+```
+
+其实结合两者在一起:
+
+```javascript
+toggle: function() {
+	this.save({
+		done: !this.get('done')
+	});
+}
+
+model.toggle();
+```
+
+collection都mixin了underscore的一些utility method. 所有我们可以直接用.
+
+```javascript
+// no need to 
+_.each(collection.models, callback)
+
+// Just make it simply
+collection.each(callback)
+```
+
+同时你还可以指定callback的context.
+
+```javascript
+collection.each(callback, this)
+```
+
+在给collection创建一个新的model的时候, 可以直接使用`collection.create()`:
+
+```javascript
+// no need to 
+var newTodo = new Todo({
+	title: 'Sleep'
+});
+
+newTodo.save();
+collection.add(newTodo);
+
+// make it simply
+collection.create({
+	title: 'sleep'
+});
+
+```
+
+把一些配置或者常量放在config.js里面, 比如服务器的地址, Enter键的code
+
 
 ## Todos
 ### Improvement

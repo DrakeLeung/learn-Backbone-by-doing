@@ -1,14 +1,17 @@
 require("../../style/app.css")
 
+
 import $ from 'jquery'
 import Backbone from 'backbone'
+
+import { ENTER_KEY } from '../config.js'
 
 import TodoListView from './TodoListView.js'
 import StatView from './StatView.js'
 import TodoCollection from '../collection/TodoCollection.js'
 import TodoItem from '../model/TodoItem.js'
 
-var AppView = Backbone.View.extend({
+let AppView = Backbone.View.extend({
 	events: {
 		'keypress input': 'addTodo',
 		'click': 'handleClick'
@@ -20,14 +23,24 @@ var AppView = Backbone.View.extend({
 		this.$input = $('.app-view .todo-input');
 		this.todoCollection = new TodoCollection();
 
+		// fire 'reset' event,
+		// instead of 'add' event which may triggered many times
 		this.todoCollection.fetch({
-			success: function () {
-				me.render();
-				me.listenTo(me.todoCollection, 'update', me.render);
-			}
+			reset: true
 		});
 
+		//me.listenTo(me.todoCollection, 'add', me.updateView);
+		me.listenTo(me.todoCollection, 'reset', me.render);
+		me.listenTo(me.todoCollection, 'update', me.render);
+
 	},
+
+	//updateView: function (todoModel) {
+	//	console.log('add');
+	//	this.todoListView.singleTodo(todoModel);
+	//	this.statView.updateCount();
+	//
+	//},
 
 	render: function () {
 		this.createTodoListView();
@@ -47,7 +60,7 @@ var AppView = Backbone.View.extend({
 
 	},
 
-	createTodoListView: function () {
+	createTodoListView: function (todoModel) {
 		if (!this.todoListView) {
 			this.todoListView = new TodoListView({
 				collection: this.todoCollection
@@ -55,6 +68,7 @@ var AppView = Backbone.View.extend({
 		}
 
 		this.$el.append(this.todoListView.render().el);
+
 	},
 
 	// handle the bubble click event
@@ -90,7 +104,6 @@ var AppView = Backbone.View.extend({
 		})[0];
 
 		todoModel.toggle();
-		todoModel.save();
 
 	},
 
@@ -109,7 +122,7 @@ var AppView = Backbone.View.extend({
 
 	addTodo: function (event) {
 		// If not 'Enter' key
-		if (event.which != 13) return 0;
+		if (event.which != ENTER_KEY) return 0;
 
 		let title = this.$input.val();
 		if (!title || !title.trim()) {
@@ -117,15 +130,12 @@ var AppView = Backbone.View.extend({
 			return 0;
 		}
 
-		var newTodo = new TodoItem({
-			'title': title
+		this.todoCollection.create({
+			title: title
 		});
 
-		this.todoCollection.add(newTodo);
-		newTodo.save();
-
 		this.$input.val('');
-	},
+	}
 
 });
 
