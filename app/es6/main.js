@@ -1,3 +1,7 @@
-import AppView from './view/AppView.js';
+require('../style/app.css')
 
-AppView.render();
+import Router from './router/Router.js'
+import Backbone from 'backbone'
+
+new Router();
+Backbone.history.start();
