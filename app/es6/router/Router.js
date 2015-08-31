@@ -6,15 +6,6 @@ import MusicDetailView from '../view/MusicDetailView.js'
 
 let router = Backbone.Router.extend({
 	initialize: function () {
-		if (!this.appView) {
-			this.appView = new AppView();
-			this.collection = this.appView.collection;
-		}
-
-		if (!this.detailView) {
-			this.detailView = new MusicDetailView();
-		}
-
 	},
 
 	routes: {
@@ -23,11 +14,27 @@ let router = Backbone.Router.extend({
 	},
 
 	album: function () {
+		if (!this.appView) {
+			this.appView = new AppView();
+			this.collection = this.appView.collection;
+		}
+
 		this.appView.setElement('.app-view');
 	},
 
 	music: function (id) {
-		let model = this.collection.get(id);
+		if (!this.detailView) {
+			this.detailView = new MusicDetailView();
+		}
+
+		let collection = this.collection;
+		if (!collection) {
+			alert('The Music List is empty');
+			this.navigate('', { trigger: true });
+			return 0;
+		}
+
+		let model = collection.get(id);
 
 		this.detailView.model = model;
 

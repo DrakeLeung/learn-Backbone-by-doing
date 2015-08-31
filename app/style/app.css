@@ -13,9 +13,18 @@ body {
   padding: 1rem;
 }
 
+.column {
+  float: left !important;
+  padding: 1rem !important;
+}
+
+/* app view */
+
 .app-header {
   margin-bottom: 1rem;
 }
+
+/* album view */
 
 .album {
   list-style: none;
@@ -23,20 +32,54 @@ body {
   padding: 0;
 
   width: 30%;
+  max-width: 180px;
 }
 
 .music-item {
-  border: 1px solid #000;
+  border: 1px solid #ccc;
 
-  padding: .8rem;
+  /*padding: .8rem;*/
   font-size: 1.6rem;
 }
 
 .music-item a {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  padding: .8rem;
   text-decoration: none;
 }
 
-.column {
-  float: left;
-  padding: 1rem;
+.music-item a:visited {
+  color: #000;
 }
+
+.music-item a:hover {
+  background: rgba(169, 68, 66, 0.51);
+}
+.music-item a:focus {
+  background: #a94442;
+}
+
+
+/* music detail */
+
+.music-detail p:first-of-type {
+  margin-top: 0;
+}
+.music-detail p:last-of-type {
+  margin-bottom: 0;
+}
+.cover {
+  width: 200px;
+}
+.cover > * {
+  width: 100%;
+}
+
+.cover img {
+  display: block;
+  margin-bottom: 1rem;
+}
+

@@ -1,18 +1,35 @@
-<p>
-	<label for="<%= title %>"> Title </label>
-	<input type="text" value="<%= title %>" id="<%= title %>">
-</p>
+<div class="general column">
+	<p>
+		<label for="<%= title %>"> Title: </label> <br>
+		<input type="text" value="<%= title %>" id="<%= title %>">
+	</p>
 
-<p>
-	<label for="<%= artist %>"> artist </label>
-	<input type="text" value="<%= artist %>" id="<%= artist %>">
-</p>
+	<p>
+		<label for="<%= artist %>"> Artist: </label> <br>
+		<input type="text" value="<%= artist %>" id="<%= artist %>">
+	</p>
 
-<p>
-	<label for="<%= album %>"> Album </label>
-	<input type="text" value="<%= album %>" id="<%= album %>">
-</p>
+	<p>
+		<label for="<%= album %>"> Album: </label> <br>
+		<input type="text" value="<%= album %>" id="<%= album %>">
+	</p>
 
+	<p>
+		<label for="<%= year %>"> Year: </label> <br>
+		<input type="text" value="<%= year %>" id="<%= year %>">
+	</p>
+
+	<p>
+		<label for="<%= duration %>"> Duration: </label> <br>
+		<input type="text" value="<%= duration %>" id="<%= duration %>">
+	</p>
+
+</div>
+
+<div class="cover column">
+	<img src="<%= cover %>" alt="<%= title %>"/>
+	<textarea name="comment" id="" cols="20" rows="10"><%= comment %></textarea>
+</div>
 
 
 

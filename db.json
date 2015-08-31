@@ -4,6 +4,7 @@
       "id": 1,
       "title": "Ocean Deep",
       "artist": "Drake Leung",
+      "album": "Fragile People",
       "year": "2007",
       "duration": "4:04",
       "comment": "so deep"
@@ -12,6 +13,7 @@
       "id": 2,
       "title": "Cheerleader",
       "artist": "Drake Leung",
+      "album": "Fragile People",
       "year": "2007",
       "duration": "4:04",
       "comment": "so deep"
@@ -20,6 +22,16 @@
       "id": 3,
       "title": "Where Is The Love?",
       "artist": "Black Eyed Peas",
+      "album": "Fragile People",
+      "year": "2007",
+      "duration": "4:04",
+      "cover": "app/image/whereisthelove.jpg",
+      "comment": "so deep"
+    },
+    {
+      "id": 4,
+      "title": "Shut Up and Dance",
+      "artist": "Walk The Moon",
       "year": "2007",
       "duration": "4:04",
       "comment": "so deep"

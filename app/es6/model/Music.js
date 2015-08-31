@@ -3,7 +3,7 @@ import { config } from '../config.js'
 import Backbone from 'backbone'
 
 let MusicModel = Backbone.Model.extend({
-	urlRoot: config.host,
+	//urlRoot: config.host,
 
 	defaults: {
 		id: '',
@@ -12,8 +12,8 @@ let MusicModel = Backbone.Model.extend({
 		album: 'Unknown',
 		year: 'Unknown',
 		duration: '',
-		comment: ''
-
+		comment: '',
+		cover: ''
 	}
 });
 
